@@ -18,7 +18,6 @@ import javax.crypto.NoSuchPaddingException;
 import Security.DataAES;
 
 public class DBConnector {
-	
 	private static DBConnector instance = new DBConnector();
 	
 	public static DBConnector getInstance() {
@@ -35,7 +34,7 @@ public class DBConnector {
 	public DBConnector() {
 		try {
 			// 암호화된 DB password read
-			String propFile = "../Security/AESkey.properties";
+			String propFile = "E:/eclipse/webProject_git/WebProject/src/Security/AESkey.properties";
 			Properties props = new Properties();
 			fis = new FileInputStream(propFile);
 			props.load(new java.io.BufferedInputStream(fis));
@@ -47,6 +46,7 @@ public class DBConnector {
 			key.load(new java.io.BufferedInputStream(key_fis));
 			
 			dbPassword = DataAES.aesDecryption(props.getProperty("password"), key.getProperty("key"));
+			
 			
 		} catch (FileNotFoundException e) {// 예외처리 ,대응부재 제거
 			System.err.println("CommDAO FileNotFoundException error");
@@ -79,7 +79,7 @@ public class DBConnector {
 	
 	public Connection getConn() {	//	Connection 객체 반환
 		try {
-			Class.forName("org.mysql.jdbc.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			return DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (SQLException e) {
 			System.err.println("DBconnector SQLException error");
