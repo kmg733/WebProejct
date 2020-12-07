@@ -67,6 +67,5 @@
 		script.println("history.back();");
 		script.println("</script>");
 		script.close();
-		
 	}
 %>

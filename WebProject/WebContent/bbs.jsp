@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="user.UserDAO" %>
+<%@ page import="bbs.BbsDAO" %>
+<%@ page import="bbs.BbsDTO" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +15,13 @@
 
     <!-- 커스텀 CSS 추가하기 -->
 	<link rel="stylesheet" href="./css/custom.css">
+
+	<style type="text/css">
+		a, a:hover {
+			color: #000000;
+			text-decoration: none;
+		}
+	</style> 
 </head>
 <body>
 <%
@@ -29,6 +38,10 @@
 		script.close();
 	}
 	
+	int pageNumber = 1;
+	if(request.getParameter("pageNumber") != null) {
+		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+	}
 %>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -86,14 +99,34 @@
 					</tr>
 				</thead>
 				<tbody>
+					<%
+						BbsDAO bbsDAO = new BbsDAO();
+						ArrayList<BbsDTO> list = bbsDAO.getList(pageNumber);
+						for(int i = 0; i < list.size(); i++) {
+					%>
 					<tr>
-						<td>1</td>
-						<td>안녕하세요</td>
-						<td>홍길동</td>
-						<td>2020-12-07</td>
+						<td><%= list.get(i).getBbsID() %></td>
+						<td><a href="view.jsp?bbsID=<%= list.get(i).getBbsID() %>"><%= list.get(i).getBbsTitle() %></a></td>
+						<td><%= list.get(i).getUserID() %></td>
+						<td><%= list.get(i).getBbsDate() %></td>
 					</tr>
+					<%
+						}
+					%>
+			
 				</tbody>
 			</table>
+			<%
+				if(pageNumber != 1) {
+			%>
+				<a href="bbs.jsp?pageNumber=<%=pageNumber - 1%>" class="btn btn-success btn-arrow-left">이전</a>
+			<%
+				} if(bbsDAO.nextPage(pageNumber + 1)) {
+			%>
+				<a href="bbs.jsp?pageNumber=<%=pageNumber + 1%>" class="btn btn-success btn-arrow-left">다음</a>
+			<%
+				}
+			%>
 			<div class="align-self-end ml-auto">
 				<a href="write.jsp" class="btn btn-primary mr-sm-2">글쓰기</a>
 			</div>
