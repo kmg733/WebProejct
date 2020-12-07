@@ -80,7 +80,14 @@
 				<label>비밀번호</label>
 				<input type="password" name="userPassword" class="form-control">
 			</div>
-			<button type="submit" class="btn btn-primary">로그인</button>
+			<div class="d-flex bd-highlight mb-3">
+				<div class="mr-auto p-2 bd-highlight">			
+					<button type="submit" class="btn btn-primary">로그인</button>
+				</div>
+				<div class="p-2 bd-highlight">
+					<a href="userJoin.jsp" class="btn btn-primary ">회원가입</a>
+				</div>
+			</div>
 		</form>		
 	</section>
 	 

@@ -127,7 +127,7 @@ public class BbsDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.err.println("BBS write SQLException error");
-			returns = "error" + e;
+			returns = "error";
 		} finally {
 			if (pstmt != null)
 				try {
@@ -171,13 +171,11 @@ public class BbsDAO {
 				bbs.setBbsContent(rs.getString(5));
 				bbs.setBbsAvailable(rs.getInt(6));
 				list.add(bbs);
-				
-				System.out.println(bbs.getBbsAvailable() + " " + bbs.getBbsContent() + " " + bbs.getBbsID() + " " + bbs.getBbsDate() + " " + bbs.getUserID());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.err.println("BBS write SQLException error");
-			returns = "error" + e;
+			returns = "error";
 		} finally {
 			if (pstmt != null)
 				try {
@@ -207,8 +205,10 @@ public class BbsDAO {
 	public boolean nextPage(int pageNumber) { // 페이징 처리 함수
 		try {
 			conn = dbConnector.getConn();
+			//	내림차순으로 최신글 10개를 보이기
 			sql = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
+			//	한페이지에 10개씩 출력하는 조건
 			pstmt.setInt(1, Integer.parseInt(getNext()) - (pageNumber - 1) * 10);	
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -216,28 +216,28 @@ public class BbsDAO {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.err.println("BBS write SQLException error");
-			returns = "error" + e;
+			System.err.println("BBS nextPage SQLException error");
+			returns = "error";
 		} finally {
 			if (pstmt != null)
 				try {
 					pstmt.close();
 				} catch (SQLException ex) {
-					System.err.println("BBS write SQLException error");
+					System.err.println("BBS nextPage SQLException error");
 					returns = "error";
 				}
 			if (conn != null)
 				try {
 					conn.close();
 				} catch (SQLException ex) {
-					System.err.println("BBS write SQLException error");
+					System.err.println("BBS nextPage SQLException error");
 					returns = "error";
 				}
 			if (rs != null)
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User write SQLException error");
+					System.err.println("User nextPage SQLException error");
 					returns = "error";
 				}	
 		}	
@@ -247,40 +247,131 @@ public class BbsDAO {
 	public BbsDTO getBbs(int bbsID) {
 		try {
 			conn = dbConnector.getConn();
-			sql = "SELECT * FROM BBS WHERE bbsID = ";
+			sql = "SELECT * FROM BBS WHERE bbsID = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(getNext()) - (pageNumber - 1) * 10);	
+			pstmt.setInt(1, bbsID);	
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				return true;
+				BbsDTO bbsDTO = new BbsDTO();
+				bbsDTO.setBbsID(rs.getInt(1));
+				bbsDTO.setBbsTitle(rs.getString(2));
+				bbsDTO.setUserID(rs.getString(3));
+				bbsDTO.setBbsDate(rs.getString(4));
+				bbsDTO.setBbsContent(rs.getString(5));
+				bbsDTO.setBbsAvailable(rs.getInt(6));
+				return bbsDTO;	
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.err.println("BBS write SQLException error");
-			returns = "error" + e;
+			System.err.println("BBS getBbs SQLException error");
+			returns = "error";
 		} finally {
 			if (pstmt != null)
 				try {
 					pstmt.close();
 				} catch (SQLException ex) {
-					System.err.println("BBS write SQLException error");
+					System.err.println("BBS getBbs SQLException error");
 					returns = "error";
 				}
 			if (conn != null)
 				try {
 					conn.close();
 				} catch (SQLException ex) {
-					System.err.println("BBS write SQLException error");
+					System.err.println("BBS getBbs SQLException error");
 					returns = "error";
 				}
 			if (rs != null)
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User write SQLException error");
+					System.err.println("User getBbs SQLException error");
 					returns = "error";
 				}	
 		}	
-		return false;
+		return null;
+	}
+	
+	public String update(int bbsID, String bbsTitle, String bbsContent) {
+		try {
+			conn = dbConnector.getConn();
+			sql = "UPDATE BBS SET bbsTitle = ?, bbsContent = ? WHERE bbsID = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bbsTitle);
+			pstmt.setString(2, bbsContent);
+			pstmt.setInt(3, bbsID);
+			if(pstmt.executeUpdate() > 0) {
+				returns = "update Success";
+			} else {
+				returns = "update Failed";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("BBS update SQLException error");
+			returns = "error";
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+					System.err.println("BBS update SQLException error");
+					returns = "error";
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException ex) {
+					System.err.println("BBS update SQLException error");
+					returns = "error";
+				}
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+					System.err.println("User update SQLException error");
+					returns = "error";
+				}	
+		}	
+		return returns;
+	}
+	
+	public String delete(int bbsID) {
+		try {
+			conn = dbConnector.getConn();
+			sql = "UPDATE BBS SET bbsAvailable = 0 WHERE bbsID = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bbsID);
+			if(pstmt.executeUpdate() > 0) {
+				returns = "delete Success";
+			} else {
+				returns = "delete Failed";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("BBS delete SQLException error");
+			returns = "error";
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+					System.err.println("BBS delete SQLException error");
+					returns = "error";
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException ex) {
+					System.err.println("BBS delete SQLException error");
+					returns = "error";
+				}
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+					System.err.println("User delete SQLException error");
+					returns = "error";
+				}	
+		}	
+		return returns;
 	}
 }

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="bbs.BbsDAO" %>
 <%@ page import="bbs.BbsDTO" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="bbs.BbsDAO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,13 +14,6 @@
 
     <!-- 커스텀 CSS 추가하기 -->
 	<link rel="stylesheet" href="./css/custom.css">
-
-	<style type="text/css">
-		a, a:hover {
-			color: #000000;
-			text-decoration: none;
-		}
-	</style> 
 </head>
 <body>
 <%
@@ -38,12 +30,28 @@
 		script.close();
 	}
 	
-	int pageNumber = 1;
-	if(request.getParameter("pageNumber") != null) {
-		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+	int bbsID = 0;
+	if (request.getParameter("bbsID") != null) {
+		bbsID = Integer.parseInt(request.getParameter("bbsID"));
+	}
+	if (bbsID == 0) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 글입니다.');");
+		script.println("location.href = 'bbs.jsp'");
+		script.println("</script>");
+		script.close();
+	}
+	BbsDTO bbsDTO = new BbsDAO().getBbs(bbsID);
+	if (!userID.equals(bbsDTO.getUserID())) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('권한이 없습니다.');");
+		script.println("location.href = 'bbs.jsp'");
+		script.println("</script>");
+		script.close();
 	}
 %>
-
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="index.jsp">우리의 커뮤니티 사이트!</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
@@ -65,18 +73,7 @@
 						회원관리
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-					<%
-						if(userID == null) {
-					%>
-						<a class="dropdown-item" href="userLogin.jsp">로그인</a>
-						<a class="dropdown-item" href="userJoin.jsp">회원가입</a>
-					<%
-					} else{
-					%>
 						<a class="dropdown-item" href="userLogoutAction.jsp">로그아웃</a>
-					<%
-					}
-					%>
 					</div>
 				</li>
 			</ul>
@@ -88,51 +85,33 @@
 	</nav>
 	
 	<section class="container">
-		<div class ="row">
+		<form method="post" action="./updateAction.jsp?bbsID=<%= bbsID %>">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
-						<th style="backgroud-color: #eeeeee; text-align: center;">번호</th>
-						<th style="backgroud-color: #eeeeee; text-align: center;">제목</th>
-						<th style="backgroud-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="backgroud-color: #eeeeee; text-align: center;">작성일</th>
+						<th colspan="1" style="backgroud-color: #eeeeee; text-align: center;">게시판 글 수정</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%
-						BbsDAO bbsDAO = new BbsDAO();
-						ArrayList<BbsDTO> list = bbsDAO.getList(pageNumber);
-						for(int i = 0; i < list.size(); i++) {
-					%>
 					<tr>
-						<td><%= list.get(i).getBbsID() %></td>
-						<td><a href="view.jsp?bbsID=<%= list.get(i).getBbsID() %>"><%= list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;")
-								.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></a></td>
-						<td><%= list.get(i).getUserID() %></td>
-						<td><%= list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시 " + list.get(i).getBbsDate().substring(14, 16) + "분"%></td>
+						<td><input type="text" class="form-control" placeholder="글 제목" name="bbsTitle" maxlength="50" value="<%= bbsDTO.getBbsTitle() %>"></td>
+					</tr>	
+					<tr>	
+						<td><textarea class="form-control" placeholder="글 내용" name="bbsContent" maxlength="2048" style="height: 350px;"><%= bbsDTO.getBbsContent() %></textarea></td>
 					</tr>
-					<%
-						}
-					%>
-			
 				</tbody>
 			</table>
-			<%
-				if(pageNumber != 1) {
-			%>
-				<a href="bbs.jsp?pageNumber=<%=pageNumber - 1%>" class="btn btn-success btn-arrow-left">이전</a>
-			<%
-				} if(bbsDAO.nextPage(pageNumber + 1)) {
-			%>
-				<a href="bbs.jsp?pageNumber=<%=pageNumber + 1%>" class="btn btn-success btn-arrow-left">다음</a>
-			<%
-				}
-			%>
-			<div class="align-self-end ml-auto">
-				<a href="write.jsp" class="btn btn-primary mr-sm-2">글쓰기</a>
+			<div class="d-flex bd-highlight mb-3">
+				<div class="mr-auto p-2 bd-highlight"></div>
+				<div class="p-2 bd-highlight">
+					<!-- updateAction으로 작성한 게시글 전송 -->
+					<input type="submit" class="btn btn-primary mr-sm-2" value="글수정">
+				</div>
 			</div>
-		</div>
+		</form>
 	</section>
+	
+	
 	
 	
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
