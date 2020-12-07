@@ -67,7 +67,7 @@
 					</div>
 				</li>
 			</ul>
-			<form class="form-inline mr-auto">
+			<form class="form-inline my-2 my-lg-0">
 				<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 			</form>
@@ -75,109 +75,28 @@
 	</nav>
 	
 	<section class="container">
-	
-	<!-- 
-		<form method="get" action="./index.jsp" class="form-inline mt-3">
-			<select name="lectureDivide" class="form-control mx-1 mt-2">
-				<option value="전체">전체</option>
-				<option value="전공">전공</option>
-				<option value="교양">교양</option>
-				<option value="기타">기타</option>
-			</select>
-			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
-			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
-			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a>
-			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a>
-		</form>
-		
-	<div class="card bg-light mt-3">
-		<div class="card-header bg-light">
-			<div class="row">
-				<div class="col-8 text-left">컴퓨터개론&nbsp;<small>나동빈</small></div>
-				<div class="col-4 text-right">
-					종합<span style="color: red;">A</span>
+		<div class ="row">
+			<form method="post" action="./writeAction.jsp">
+				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+					<thead>
+						<tr>
+							<th colspan="2" style="backgroud-color: #eeeeee; text-align: center;">게시판 글쓰기 양식</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="text" class="form-control" placeholder="글 제목" name="bbsTitle" maxlength="50"></td>
+						</tr>	
+						<tr>	
+							<td><textarea class="form-control" placeholder="글 내용" name="bbsContent" maxlength="2048" style="height: 350px;" ></textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="align-self-end ml-auto">
+					<intput type="submit" class="btn btn-primary mr-sm-2" value="글쓰기">
 				</div>
-			</div>
+			</form>
 		</div>
-		<div class="card-body">
-			<h5 class="card-title">
-				정말 좋은 강의예요.&nbsp;<small>(2020년 겨울학기)</small>
-			</h5>
-			<p class="card-text">강의가 많이 널널해서,~~.</p>
-			<div class="row">
-				<div class="col-9 text-left">
-					성적<span style="color: red;">A</span>
-					널널<span style="color: red;">A</span>
-					강의<span style="color: red;">B</span>
-					<span style="color: green;">()추천: 15)</span>
-				</div>
-				<div class="col-3 text-right">
-					<a oncloick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
-					<a oncloick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">추천</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="card bg-light mt-3">
-		<div class="card-header bg-light">
-			<div class="row">
-				<div class="col-8 text-left">컴퓨터개론&nbsp;<small>나동빈</small></div>
-				<div class="col-4 text-right">
-					종합<span style="color: red;">A</span>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-			<h5 class="card-title">
-				정말 좋은 강의예요.&nbsp;<small>(2020년 겨울학기)</small>
-			</h5>
-			<p class="card-text">강의가 많이 널널해서,~~.</p>
-			<div class="row">
-				<div class="col-9 text-left">
-					성적<span style="color: red;">A</span>
-					널널<span style="color: red;">A</span>
-					강의<span style="color: red;">B</span>
-					<span style="color: green;">()추천: 15)</span>
-				</div>
-				<div class="col-3 text-right">
-					<a oncloick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
-					<a oncloick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">추천</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="card bg-light mt-3">
-		<div class="card-header bg-light">
-			<div class="row">
-				<div class="col-8 text-left">컴퓨터개론&nbsp;<small>나동빈</small></div>
-				<div class="col-4 text-right">
-					종합<span style="color: red;">A</span>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-			<h5 class="card-title">
-				정말 좋은 강의예요.&nbsp;<small>(2020년 겨울학기)</small>
-			</h5>
-			<p class="card-text">강의가 많이 널널해서,~~.</p>
-			<div class="row">
-				<div class="col-9 text-left">
-					성적<span style="color: red;">A</span>
-					널널<span style="color: red;">A</span>
-					강의<span style="color: red;">B</span>
-					<span style="color: green;">()추천: 15)</span>
-				</div>
-				<div class="col-3 text-right">
-					<a oncloick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
-					<a oncloick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">추천</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	-->
-	
 	</section>
 	
 	

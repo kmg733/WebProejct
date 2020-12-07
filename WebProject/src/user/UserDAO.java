@@ -23,99 +23,105 @@ public class UserDAO {
 		dbConnector = DBConnector.getInstance();
 	}
 	
-	public String join(String id, String password, String name, String email, String phone) {
+	public String join(UserDTO user) {
 		try {
 			conn = dbConnector.getConn();
-			sql = "select * from user where id=?";
+			sql = "SELECT * FROM USER WHERE userID=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
+			pstmt.setString(1, user.getUserID());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				returns = "join Failed";
-				return returns;
+				// 아이디 중복
+				returns = "userID overlab";
 			}
-			
-			sql = "insert into user (id, password, name, email, phone) values (?, ?, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, password);
-			pstmt.setString(3, name);
-			pstmt.setString(4, email);
-			pstmt.setString(5, phone);
-			if (pstmt.executeUpdate() < 1) {
-				return "join Failed";
+			else {
+				sql = "INSERT INTO USER (userID, userPassword, userName, userEmail, userPhone) VALUES (?, ?, ?, ?, ?)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, user.getUserID());
+				pstmt.setString(2, user.getUserPassword());
+				pstmt.setString(3, user.getUserName());
+				pstmt.setString(4, user.getUserEmail());
+				pstmt.setString(5, user.getUserPhone());
+				pstmt.executeUpdate();
+				returns = "join Success";					
 			}
-			returns = "join Success";
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.err.println("User addUser_Add SQLException error");
+			System.err.println("User join SQLException error");
 			returns = "error";
 		} finally {
 			if (pstmt != null)
 				try {
 					pstmt.close();
 				} catch (SQLException ex) {
-					System.err.println("User addUser_Add SQLException error");
+					System.err.println("User join SQLException error");
 					returns = "error";
 				}
 			if (conn != null)
 				try {
 					conn.close();
 				} catch (SQLException ex) {
-					System.err.println("User addUser_Add SQLException error");
+					System.err.println("User join SQLException error");
 					returns = "error";
 				}
 			if (rs != null)
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User addUser_Add SQLException error");
+					System.err.println("User join SQLException error");
 					returns = "error";
 				}	
 		}	
 		return returns;
 	}
 	
-	public String login(String id, String password) {
+	public String login(String userID, String userPassword) {
 		try {
 			conn = dbConnector.getConn();
-			sql = "select * from user where id=? and password=?";
+			sql = "SELECT userPassword FROM USER WHERE userID=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, password);
+			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				returns = "login Success";
+				if(rs.getString(1).equals(userPassword)) {
+					// 로그인 성공
+					returns = "login Success";
+				}
+				else {
+					// 로그인 실패 - 비밀번호 틀림
+					returns = "login Failed";
+				}
 			}
 			else {
-				returns = "login Failed";
+				// 아이디 없음
+				returns = "userID Not Exist";				
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.err.println("User addUser_Add SQLException error");
+			System.err.println("User login SQLException error");
 			returns = "error";
 		} finally {
 			if (pstmt != null)
 				try {
 					pstmt.close();
 				} catch (SQLException ex) {
-					System.err.println("User addUser_Add SQLException error");
+					System.err.println("User login SQLException error");
 					returns = "error";
 				}
 			if (conn != null)
 				try {
 					conn.close();
 				} catch (SQLException ex) {
-					System.err.println("User addUser_Add SQLException error");
+					System.err.println("User login SQLException error");
 					returns = "error";
 				}
 			if (rs != null)
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User addUser_Add SQLException error");
+					System.err.println("User login SQLException error");
 					returns = "error";
 				}	
 		}	

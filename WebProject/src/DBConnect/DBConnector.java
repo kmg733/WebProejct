@@ -79,7 +79,7 @@ public class DBConnector {
 	
 	public Connection getConn() {	//	Connection °´Ã¼ ¹ÝÈ¯
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			return DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (SQLException e) {
 			System.err.println("DBconnector SQLException error");
