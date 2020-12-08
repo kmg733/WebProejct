@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>우리의 커뮤니티 사이트!</title>
+	<title>이색 여행지에 대한 모든것!</title>
 	 
 	<!-- 부트스트랩 CSS 추가하기 -->	
 	<link rel="stylesheet" href="./css/bootstrap.min.css">
@@ -45,8 +45,8 @@
 	BbsDTO bbsDTO = new BbsDAO().getBbs(bbsID);
 %>
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="index.jsp">우리의 커뮤니티 사이트!</a>
+	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+		<a class="navbar-brand text-white" href="index.jsp">이색 여행지에 대한 모든것!</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -54,15 +54,15 @@
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="index.jsp">메인</a>
+					<a class="nav-link text-white" href="index.jsp">메인</a>
 				</li>
 				
 				<li class="nav-item active">
-					<a class="nav-link" href="bbs.jsp">게시판</a>
+					<a class="nav-link text-white" href="bbs.jsp">게시판</a>
 				</li>
 				
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
+					<a class="nav-link dropdown-toggle text-white" id="dropdown" data-toggle="dropdown">
 						회원관리
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
@@ -81,9 +81,9 @@
 					</div>
 				</li>
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+			<form action="./bbs.jsp" method="get" class="form-inline my-2 my-lg-0">
+				<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="search">
+				<button class="btn btn-primary text-white my-2 my-sm-0" type="submit">검색</button>
 			</form>
 		</div>
 	</nav>

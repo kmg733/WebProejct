@@ -12,13 +12,21 @@ public class BbsDTO {
 	public BbsDTO() {}
 	
 	public BbsDTO(String bbsTitle, String userID, String bbsDate, String bbsContent) {
-		super();
 		this.bbsTitle = bbsTitle;
 		this.userID = userID;
 		this.bbsDate = bbsDate;
 		this.bbsContent = bbsContent;
 	}
-
+	
+	public BbsDTO(int bbsID, String bbsTitle, String userID, String bbsDate, String bbsContent, int bbsAvailable) {
+		this.bbsID = bbsID;
+		this.bbsTitle = bbsTitle;
+		this.userID = userID;
+		this.bbsDate = bbsDate;
+		this.bbsContent = bbsContent;
+		this.bbsAvailable = bbsAvailable;
+	}
+	
 	public String getBbsTitle() {
 		return bbsTitle;
 	}

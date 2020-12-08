@@ -374,4 +374,57 @@ public class BbsDAO {
 		}	
 		return returns;
 	}
+	
+	public ArrayList<BbsDTO> getList (String search, int pageNumber) { // 검색 내용을 출력하는 함수
+		ArrayList<BbsDTO> list = null;
+		try {
+			conn = dbConnector.getConn();
+			sql = "SELECT * FROM BBS WHERE bbsTitle LIKE ? OR bbsContent LIKE ?"
+					+ "ORDER BY bbsID DESC LIMIT " + pageNumber * 10 + ", " + pageNumber * 10 + 11;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + search + "%" );
+			pstmt.setString(2, "%" + search + "%" );
+			rs = pstmt.executeQuery();
+			list = new ArrayList<BbsDTO>();
+			while(rs.next()) {
+				BbsDTO bbsDTO = new BbsDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getInt(6)
+				);
+				list.add(bbsDTO);
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("User login SQLException error");
+			returns = "error";
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+					System.err.println("User login SQLException error");
+					returns = "error";
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException ex) {
+					System.err.println("User login SQLException error");
+					returns = "error";
+				}
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+					System.err.println("User login SQLException error");
+					returns = "error";
+				}	
+		}	
+		return null;
+	}
 }
