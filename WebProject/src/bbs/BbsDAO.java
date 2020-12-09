@@ -57,7 +57,7 @@ public class BbsDAO {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User getDate SQLException error");
+					System.err.println("BBS getDate SQLException error");
 					returns = "error";
 				}	
 		}	
@@ -99,7 +99,7 @@ public class BbsDAO {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User getNext SQLException error");
+					System.err.println("BBS getNext SQLException error");
 					returns = "error";
 				}	
 		}	
@@ -147,7 +147,7 @@ public class BbsDAO {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User write SQLException error");
+					System.err.println("BBS write SQLException error");
 					returns = "error";
 				}	
 		}	
@@ -189,7 +189,7 @@ public class BbsDAO {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User nextPage SQLException error");
+					System.err.println("BBS nextPage SQLException error");
 					returns = "error";
 				}	
 		}	
@@ -236,7 +236,7 @@ public class BbsDAO {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User getBbs SQLException error");
+					System.err.println("BBS getBbs SQLException error");
 					returns = "error";
 				}	
 		}	
@@ -279,7 +279,7 @@ public class BbsDAO {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User update SQLException error");
+					System.err.println("BBS update SQLException error");
 					returns = "error";
 				}	
 		}	
@@ -320,7 +320,7 @@ public class BbsDAO {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					System.err.println("User delete SQLException error");
+					System.err.println("BBS delete SQLException error");
 					returns = "error";
 				}	
 		}	

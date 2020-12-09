@@ -43,6 +43,10 @@
 				<li class="nav-item active">
 					<a class="nav-link text-white" href="bbs.jsp">게시판</a>
 				</li>
+
+				<li class="nav-item active">
+					<a class="nav-link text-white" href="album.jsp">사진첩</a>
+				</li>
 				
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-white" id="dropdown" data-toggle="dropdown">

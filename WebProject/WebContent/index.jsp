@@ -39,6 +39,10 @@
 				<li class="nav-item active">
 					<a class="nav-link text-white" href="bbs.jsp">게시판</a>
 				</li>
+
+				<li class="nav-item active">
+					<a class="nav-link text-white" href="album.jsp">사진첩</a>
+				</li>
 				
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle text-white" id="dropdown" data-toggle="dropdown">
@@ -114,7 +118,7 @@
 				</div>
 				<div class="col">
 					<h4>2번 그림</h4>
-					<p>충남의 그리스, 아산시의 지중해마을!</p>
+					<p>모래밭?, 사하라사막!</p>
 				</div>
 				<div class="col">
 					<h4>3번 그림</h4>
@@ -123,15 +127,7 @@
 			</div>
 		</div>
 	
-	
 	</div>
-	
-<!-- 	
-	<div class="contianer" style="height: 600px; width: 1100px; float:none; margin:0 auto">
-		
-	</div>
- -->
-	
  	
  	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 		Copyright &copy; 2020김민규All Right Reserved.
